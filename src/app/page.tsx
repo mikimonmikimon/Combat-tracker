@@ -21,6 +21,67 @@ export default function HomePage() {
   const [winner, setWinner] = useState<string | null>(null);
   const { toast } = useToast();
 
+  // Load state from localStorage on component mount
+  useEffect(() => {
+    const storedPlayer1 = localStorage.getItem('player1');
+    const storedPlayer2 = localStorage.getItem('player2');
+    const storedGamePhase = localStorage.getItem('gamePhase');
+    const storedWinner = localStorage.getItem('winner');
+
+    if (storedPlayer1) {
+      try {
+        setPlayer1(JSON.parse(storedPlayer1));
+      } catch (error) {
+        console.error("Error parsing player1 from localStorage", error);
+        localStorage.removeItem('player1');
+      }
+    }
+    if (storedPlayer2) {
+      try {
+        setPlayer2(JSON.parse(storedPlayer2));
+      } catch (error) {
+        console.error("Error parsing player2 from localStorage", error);
+        localStorage.removeItem('player2');
+      }
+    }
+    if (storedGamePhase) {
+      setGamePhase(storedGamePhase as GamePhase);
+    }
+    if (storedWinner) {
+      setWinner(storedWinner);
+    }
+  }, []);
+
+  // Save state to localStorage whenever relevant state variables change
+  useEffect(() => {
+    if (player1) {
+      localStorage.setItem('player1', JSON.stringify(player1));
+    } else {
+      localStorage.removeItem('player1');
+    }
+  }, [player1]);
+
+  useEffect(() => {
+    if (player2) {
+      localStorage.setItem('player2', JSON.stringify(player2));
+    } else {
+      localStorage.removeItem('player2');
+    }
+  }, [player2]);
+
+  useEffect(() => {
+    localStorage.setItem('gamePhase', gamePhase);
+  }, [gamePhase]);
+  
+  useEffect(() => {
+    if (winner) {
+      localStorage.setItem('winner', winner);
+    } else {
+      localStorage.removeItem('winner');
+    }
+  }, [winner]);
+
+
   const handleSetupComplete = (p1Data: Omit<CharacterStats, 'id' | 'icon' | 'maxHealth' | 'maxCosmos' | 'maxArmor'> & {name: string}, p2Data: Omit<CharacterStats, 'id' | 'icon' | 'maxHealth' | 'maxCosmos' | 'maxArmor'> & {name: string}) => {
     setPlayer1({
       ...p1Data,
@@ -28,7 +89,7 @@ export default function HomePage() {
       icon: User,
       maxHealth: p1Data.health,
       maxCosmos: p1Data.cosmos,
-      maxArmor: p1Data.armor, // Set maxArmor from initial armor
+      maxArmor: p1Data.armor,
     });
     setPlayer2({
       ...p2Data,
@@ -36,7 +97,7 @@ export default function HomePage() {
       icon: UserRound,
       maxHealth: p2Data.health,
       maxCosmos: p2Data.cosmos,
-      maxArmor: p2Data.armor, // Set maxArmor from initial armor
+      maxArmor: p2Data.armor,
     });
     setGamePhase("combat");
     setWinner(null);
@@ -71,16 +132,14 @@ export default function HomePage() {
     } else if (stat === "cosmos") {
       newValue = Math.max(0, Math.min(newValue, playerToUpdate.maxCosmos));
     } else if (stat === "armor") {
-      // Armor is clamped between 0 and its maxArmor value.
       newValue = Math.max(0, Math.min(newValue, playerToUpdate.maxArmor));
     }
     
     const updatedPlayer = { ...playerToUpdate, [stat]: newValue };
     setPlayer(updatedPlayer);
 
-    // Check for winner if health changed
     if (stat === "health" && newValue <= 0) {
-      if (otherPlayer) { // Ensure otherPlayer is defined
+      if (otherPlayer) { 
         setWinner(otherPlayer.name);
         setGamePhase("gameOver");
         toast({
@@ -98,6 +157,10 @@ export default function HomePage() {
     setPlayer1(null);
     setPlayer2(null);
     setWinner(null);
+    localStorage.removeItem('player1');
+    localStorage.removeItem('player2');
+    localStorage.removeItem('gamePhase');
+    localStorage.removeItem('winner');
     toast({
       title: "Juego Reiniciado",
       description: "Configura tus combatientes de nuevo.",
@@ -109,24 +172,31 @@ export default function HomePage() {
   }
 
   if (!player1 || !player2) {
-    // Should not happen if gamePhase is not 'setup', but as a fallback:
+    // Fallback, should ideally not be reached if localStorage logic is sound
+    // or if initial setup is always forced.
+    // If localStorage is corrupted or empty, and phase is not setup, this might be hit.
+    // We can force a reset here or show an error.
+    // Forcing reset to setup might be a better UX than showing an error.
+    if(typeof window !== 'undefined'){ // ensure localStorage is available
+        localStorage.removeItem('player1');
+        localStorage.removeItem('player2');
+        localStorage.removeItem('winner');
+        localStorage.setItem('gamePhase', 'setup'); // Force back to setup
+    }
+    // To prevent flashing the error, we can briefly show a loading or redirecting state
+    // For simplicity, just resetting the state and letting the next render cycle handle it.
+    if (gamePhase !== "setup") setGamePhase("setup"); // Trigger re-render to setup form
     return (
-      <div className="flex flex-col items-center justify-center h-screen">
-        <p className="text-xl text-destructive">Error: Faltan datos del jugador.</p>
-        <Button onClick={resetGame} className="mt-4">Reiniciar Juego</Button>
+      <div className="flex flex-col items-center justify-center min-h-screen">
+         <p className="text-lg">Cargando configuración...</p>
       </div>
     );
   }
 
   return (
     <div className="w-full flex flex-col items-center space-y-4 sm:space-y-6">
-      {/* Title removed as per request */}
-      {/* <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-primary tracking-tight">
-        Rastreador de Combate Cósmico
-      </h1> */}
-
       {winner && gamePhase === "gameOver" && (
-        <Alert variant="default" className="max-w-md bg-accent/20 border-accent shadow-lg mt-4"> {/* Added mt-4 for spacing if title is removed */}
+        <Alert variant="default" className="max-w-md bg-accent/20 border-accent shadow-lg mt-4">
           <Award className="h-5 w-5 sm:h-6 sm:w-6 text-accent" />
           <AlertTitle className="text-xl sm:text-2xl font-bold text-accent">¡{winner} Gana!</AlertTitle>
           <AlertDescription className="text-base sm:text-lg">
@@ -158,3 +228,4 @@ export default function HomePage() {
     </div>
   );
 }
+

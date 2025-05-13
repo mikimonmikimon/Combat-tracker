@@ -52,9 +52,9 @@ export function SetupForm({ onSetupComplete }: SetupFormProps) {
     resolver: zodResolver(setupFormSchema),
     defaultValues: {
       player1Name: "Jugador 1",
-      player1Stats: { health: 100, armor: 20, cosmos: 50 },
+      player1Stats: { health: 240, armor: 300, cosmos: 480 },
       player2Name: "Jugador 2",
-      player2Stats: { health: 120, armor: 30, cosmos: 40 },
+      player2Stats: { health: 240, armor: 300, cosmos: 480 },
     },
   });
 

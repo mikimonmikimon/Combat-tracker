@@ -1,3 +1,4 @@
+
 import type {Metadata} from 'next';
 import {Geist, Geist_Mono} from 'next/font/google';
 import './globals.css';
@@ -15,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Cosmos Combat Tracker',
-  description: 'Track combat statistics for your cosmic battles!',
+  title: 'Rastreador de Combate Cósmico',
+  description: '¡Rastrea las estadísticas de combate para tus batallas cósmicas!',
 };
 
 export default function RootLayout({
@@ -25,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="es" className="dark">
       <body className={cn(
           `${geistSans.variable} ${geistMono.variable} antialiased`,
           "bg-background text-foreground"
@@ -38,3 +39,4 @@ export default function RootLayout({
     </html>
   );
 }
+

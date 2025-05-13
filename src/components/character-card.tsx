@@ -1,3 +1,4 @@
+
 "use client";
 
 import type { CharacterStats } from "@/types";
@@ -104,19 +105,19 @@ export function CharacterCard({ character, onStatChange, isGameOver }: Character
             variant="outline"
             size="sm"
             onClick={() => handleAction(statKey, "damage")}
-            aria-label={`Damage ${label}`}
+            aria-label={`Dañar ${label}`}
             className="hover:bg-destructive hover:text-destructive-foreground"
           >
-            <MinusCircle className="w-4 h-4 mr-1" /> Damage
+            <MinusCircle className="w-4 h-4 mr-1" /> Dañar
           </Button>
           <Button
             variant="outline"
             size="sm"
             onClick={() => handleAction(statKey, "heal")}
-            aria-label={`Heal ${label}`}
+            aria-label={`Curar ${label}`}
             className="hover:bg-emerald-500 hover:text-white"
           >
-            <PlusCircle className="w-4 h-4 mr-1" /> Heal
+            <PlusCircle className="w-4 h-4 mr-1" /> Curar
           </Button>
         </div>
       )}
@@ -131,17 +132,18 @@ export function CharacterCard({ character, onStatChange, isGameOver }: Character
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        <StatDisplay icon={Heart} label="Health" value={character.health} maxValue={character.maxHealth} statKey="health" iconColor="text-red-400" />
+        <StatDisplay icon={Heart} label="Salud" value={character.health} maxValue={character.maxHealth} statKey="health" iconColor="text-red-400" />
         <Separator />
-        <StatDisplay icon={Shield} label="Armor" value={character.armor} statKey="armor" iconColor="text-blue-400" />
+        <StatDisplay icon={Shield} label="Armadura" value={character.armor} statKey="armor" iconColor="text-blue-400" />
         <Separator />
         <StatDisplay icon={Sparkles} label="Cosmos" value={character.cosmos} maxValue={character.maxCosmos} statKey="cosmos" iconColor="text-yellow-400" />
       </CardContent>
       {isGameOver && (
          <CardFooter className="pt-4">
-           <p className="text-center w-full text-muted-foreground text-lg">Combat actions disabled.</p>
+           <p className="text-center w-full text-muted-foreground text-lg">Acciones de combate deshabilitadas.</p>
          </CardFooter>
       )}
     </Card>
   );
 }
+

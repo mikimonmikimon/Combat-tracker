@@ -1,3 +1,4 @@
+
 "use client";
 
 import type { CharacterStats } from "@/types";
@@ -34,8 +35,8 @@ export default function HomePage() {
     setGamePhase("combat");
     setWinner(null);
     toast({
-      title: "Combat Started!",
-      description: "May the cosmos favor the bold!",
+      title: "¡Combate Iniciado!",
+      description: "¡Que el cosmos favorezca a los audaces!",
     });
   };
 
@@ -76,8 +77,8 @@ export default function HomePage() {
         setWinner(otherPlayer.name);
         setGamePhase("gameOver");
         toast({
-          title: "Combat Over!",
-          description: `${otherPlayer.name} is victorious!`,
+          title: "¡Combate Terminado!",
+          description: `¡${otherPlayer.name} es victorioso!`,
           variant: "default",
           duration: 5000,
         });
@@ -91,8 +92,8 @@ export default function HomePage() {
     setPlayer2(null);
     setWinner(null);
     toast({
-      title: "Game Reset",
-      description: "Setup your combatants anew.",
+      title: "Juego Reiniciado",
+      description: "Configura tus combatientes de nuevo.",
     });
   };
 
@@ -104,8 +105,8 @@ export default function HomePage() {
     // Should not happen if gamePhase is not 'setup', but as a fallback:
     return (
       <div className="flex flex-col items-center justify-center h-screen">
-        <p className="text-xl text-destructive">Error: Player data missing.</p>
-        <Button onClick={resetGame} className="mt-4">Reset Game</Button>
+        <p className="text-xl text-destructive">Error: Faltan datos del jugador.</p>
+        <Button onClick={resetGame} className="mt-4">Reiniciar Juego</Button>
       </div>
     );
   }
@@ -113,15 +114,15 @@ export default function HomePage() {
   return (
     <div className="w-full flex flex-col items-center space-y-8">
       <h1 className="text-5xl font-bold text-center text-primary tracking-tight">
-        Cosmos Combat Tracker
+        Rastreador de Combate Cósmico
       </h1>
 
       {winner && gamePhase === "gameOver" && (
         <Alert variant="default" className="max-w-md bg-accent/20 border-accent shadow-lg">
           <Award className="h-6 w-6 text-accent" />
-          <AlertTitle className="text-2xl font-bold text-accent">{winner} Wins!</AlertTitle>
+          <AlertTitle className="text-2xl font-bold text-accent">¡{winner} Gana!</AlertTitle>
           <AlertDescription className="text-lg">
-            The cosmic battle has concluded. Congratulations, {winner}!
+            La batalla cósmica ha concluido. ¡Felicidades, {winner}!
           </AlertDescription>
         </Alert>
       )}
@@ -140,8 +141,9 @@ export default function HomePage() {
       </div>
 
       <Button onClick={resetGame} variant="outline" size="lg" className="mt-8 text-lg py-6">
-        <RotateCcw className="mr-2 h-5 w-5" /> Reset Combat
+        <RotateCcw className="mr-2 h-5 w-5" /> Reiniciar Combate
       </Button>
     </div>
   );
 }
+

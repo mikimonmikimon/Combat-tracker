@@ -6,5 +6,6 @@ export interface CharacterStats {
   cosmos: number;
   maxHealth: number;
   maxCosmos: number;
+  maxArmor: number; // Added maxArmor
   icon?: React.ComponentType<{ className?: string }>;
 }

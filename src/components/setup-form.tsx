@@ -18,7 +18,8 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { User, UserRound, Sparkles, Shield, Heart } from "lucide-react";
 
-const statsSchema = z.object({
+// This schema defines the stats that are input in the form
+const inputStatsSchema = z.object({
   health: z.coerce.number().min(1, "La salud debe ser al menos 1."),
   armor: z.coerce.number().min(0, "La armadura no puede ser negativa."),
   cosmos: z.coerce.number().min(0, "El cosmos no puede ser negativo."),
@@ -26,15 +27,24 @@ const statsSchema = z.object({
 
 const setupFormSchema = z.object({
   player1Name: z.string().min(1, "El nombre del Jugador 1 es obligatorio."),
-  player1Stats: statsSchema,
+  player1Stats: inputStatsSchema,
   player2Name: z.string().min(1, "El nombre del Jugador 2 es obligatorio."),
-  player2Stats: statsSchema,
+  player2Stats: inputStatsSchema,
 });
 
 type SetupFormValues = z.infer<typeof setupFormSchema>;
 
+// Define a type for the data passed to onSetupComplete
+// It's the raw input stats plus name, before full CharacterStats construction
+type PlayerSetupData = {
+  name: string;
+  health: number;
+  armor: number;
+  cosmos: number;
+};
+
 interface SetupFormProps {
-  onSetupComplete: (player1Data: CharacterStats, player2Data: CharacterStats) => void;
+  onSetupComplete: (player1Data: PlayerSetupData, player2Data: PlayerSetupData) => void;
 }
 
 export function SetupForm({ onSetupComplete }: SetupFormProps) {
@@ -49,23 +59,16 @@ export function SetupForm({ onSetupComplete }: SetupFormProps) {
   });
 
   function onSubmit(data: SetupFormValues) {
-    const player1: CharacterStats = {
-      id: 'player1',
+    const player1Data: PlayerSetupData = {
       name: data.player1Name,
       ...data.player1Stats,
-      maxHealth: data.player1Stats.health,
-      maxCosmos: data.player1Stats.cosmos,
-      icon: User,
     };
-    const player2: CharacterStats = {
-      id: 'player2',
+    const player2Data: PlayerSetupData = {
       name: data.player2Name,
       ...data.player2Stats,
-      maxHealth: data.player2Stats.health,
-      maxCosmos: data.player2Stats.cosmos,
-      icon: UserRound,
     };
-    onSetupComplete(player1, player2);
+    // onSetupComplete will handle creating full CharacterStats objects including max values
+    onSetupComplete(player1Data, player2Data);
   }
 
   return (

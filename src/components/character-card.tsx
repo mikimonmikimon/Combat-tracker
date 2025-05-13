@@ -100,12 +100,12 @@ export function CharacterCard({ character, onStatChange, isGameOver }: Character
             </span>
             <Progress value={(character.health / character.maxHealth) * 100} className="h-2 w-full mt-1 [&>div]:bg-primary" />
           </div>
-          {/* Armor Value */}
+          {/* Armor Value & Progress */}
           <div className="flex-1 flex flex-col items-center">
             <span className={cn("text-sm sm:text-base font-semibold stat-value-display px-1 py-0.5", getStatDisplayClass('armor'))}>
-              {character.armor}
+              {character.armor}/{character.maxArmor}
             </span>
-            <div className="h-2 w-full mt-1"></div> {/* Spacer for alignment with progress bars */}
+            <Progress value={character.maxArmor > 0 ? (character.armor / character.maxArmor) * 100 : 0} className="h-2 w-full mt-1 [&>div]:bg-primary" />
           </div>
           {/* Cosmos Value & Progress */}
           <div className="flex-1 flex flex-col items-center">
@@ -190,4 +190,3 @@ export function CharacterCard({ character, onStatChange, isGameOver }: Character
     </Card>
   );
 }
-

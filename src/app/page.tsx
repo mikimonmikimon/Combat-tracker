@@ -14,14 +14,6 @@ type GamePhase = "setup" | "combat" | "gameOver";
 type StatKey = "health" | "armor" | "cosmos";
 type ActionType = "damage" | "heal";
 
-const initialPlayerStats: Omit<CharacterStats, 'id' | 'name' | 'icon'> = {
-  health: 0,
-  armor: 0,
-  cosmos: 0,
-  maxHealth: 0,
-  maxCosmos: 0,
-};
-
 export default function HomePage() {
   const [gamePhase, setGamePhase] = useState<GamePhase>("setup");
   const [player1, setPlayer1] = useState<CharacterStats | null>(null);
@@ -29,9 +21,23 @@ export default function HomePage() {
   const [winner, setWinner] = useState<string | null>(null);
   const { toast } = useToast();
 
-  const handleSetupComplete = (p1Data: CharacterStats, p2Data: CharacterStats) => {
-    setPlayer1(p1Data);
-    setPlayer2(p2Data);
+  const handleSetupComplete = (p1Data: Omit<CharacterStats, 'id' | 'icon' | 'maxHealth' | 'maxCosmos' | 'maxArmor'> & {name: string}, p2Data: Omit<CharacterStats, 'id' | 'icon' | 'maxHealth' | 'maxCosmos' | 'maxArmor'> & {name: string}) => {
+    setPlayer1({
+      ...p1Data,
+      id: 'player1',
+      icon: User,
+      maxHealth: p1Data.health,
+      maxCosmos: p1Data.cosmos,
+      maxArmor: p1Data.armor, // Set maxArmor from initial armor
+    });
+    setPlayer2({
+      ...p2Data,
+      id: 'player2',
+      icon: UserRound,
+      maxHealth: p2Data.health,
+      maxCosmos: p2Data.cosmos,
+      maxArmor: p2Data.armor, // Set maxArmor from initial armor
+    });
     setGamePhase("combat");
     setWinner(null);
     toast({
@@ -65,7 +71,8 @@ export default function HomePage() {
     } else if (stat === "cosmos") {
       newValue = Math.max(0, Math.min(newValue, playerToUpdate.maxCosmos));
     } else if (stat === "armor") {
-      newValue = Math.max(0, newValue); // Armor doesn't go below 0
+      // Armor is clamped between 0 and its maxArmor value.
+      newValue = Math.max(0, Math.min(newValue, playerToUpdate.maxArmor));
     }
     
     const updatedPlayer = { ...playerToUpdate, [stat]: newValue };
@@ -113,12 +120,13 @@ export default function HomePage() {
 
   return (
     <div className="w-full flex flex-col items-center space-y-4 sm:space-y-6">
-      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-primary tracking-tight">
+      {/* Title removed as per request */}
+      {/* <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-primary tracking-tight">
         Rastreador de Combate Cósmico
-      </h1>
+      </h1> */}
 
       {winner && gamePhase === "gameOver" && (
-        <Alert variant="default" className="max-w-md bg-accent/20 border-accent shadow-lg">
+        <Alert variant="default" className="max-w-md bg-accent/20 border-accent shadow-lg mt-4"> {/* Added mt-4 for spacing if title is removed */}
           <Award className="h-5 w-5 sm:h-6 sm:w-6 text-accent" />
           <AlertTitle className="text-xl sm:text-2xl font-bold text-accent">¡{winner} Gana!</AlertTitle>
           <AlertDescription className="text-base sm:text-lg">
@@ -150,4 +158,3 @@ export default function HomePage() {
     </div>
   );
 }
-

@@ -112,22 +112,22 @@ export default function HomePage() {
   }
 
   return (
-    <div className="w-full flex flex-col items-center space-y-8">
-      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-primary tracking-tight">
+    <div className="w-full flex flex-col items-center space-y-4 sm:space-y-6">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-primary tracking-tight">
         Rastreador de Combate Cósmico
       </h1>
 
       {winner && gamePhase === "gameOver" && (
         <Alert variant="default" className="max-w-md bg-accent/20 border-accent shadow-lg">
-          <Award className="h-6 w-6 text-accent" />
-          <AlertTitle className="text-2xl font-bold text-accent">¡{winner} Gana!</AlertTitle>
-          <AlertDescription className="text-lg">
+          <Award className="h-5 w-5 sm:h-6 sm:w-6 text-accent" />
+          <AlertTitle className="text-xl sm:text-2xl font-bold text-accent">¡{winner} Gana!</AlertTitle>
+          <AlertDescription className="text-base sm:text-lg">
             La batalla cósmica ha concluido. ¡Felicidades, {winner}!
           </AlertDescription>
         </Alert>
       )}
 
-      <div className="w-full grid grid-cols-1 gap-8 justify-items-center max-w-md">
+      <div className="w-full flex flex-col items-center space-y-4 sm:space-y-6 max-w-md">
         <CharacterCard
           character={player1}
           onStatChange={handleStatChange}
@@ -143,10 +143,11 @@ export default function HomePage() {
       <Button 
         onClick={resetGame} 
         variant="outline" 
-        className="mt-8 px-6 py-3 text-base sm:px-8 sm:py-3 sm:text-lg"
+        className="mt-6 sm:mt-8 px-4 py-2 text-sm sm:px-6 sm:py-3 sm:text-base"
       >
-        <RotateCcw className="mr-2 h-5 w-5" /> Reiniciar Combate
+        <RotateCcw className="mr-2 h-4 w-4 sm:h-5 sm:w-5" /> Reiniciar Combate
       </Button>
     </div>
   );
 }
+

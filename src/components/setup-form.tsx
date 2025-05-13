@@ -72,7 +72,7 @@ export function SetupForm({ onSetupComplete }: SetupFormProps) {
   }
 
   return (
-    <Card className="w-full max-w-lg shadow-xl"> {/* Reduced max-width from max-w-2xl to max-w-lg */}
+    <Card className="w-full max-w-md shadow-xl"> {/* Reduced max-width from max-w-lg to max-w-md */}
       <CardHeader>
         <CardTitle className="text-2xl sm:text-3xl font-bold text-center text-primary">Configuración de Personajes</CardTitle>
         <CardDescription className="text-center">

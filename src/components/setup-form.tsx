@@ -69,9 +69,9 @@ export function SetupForm({ onSetupComplete }: SetupFormProps) {
   }
 
   return (
-    <Card className="w-full max-w-2xl shadow-xl">
+    <Card className="w-full max-w-lg shadow-xl">
       <CardHeader>
-        <CardTitle className="text-3xl font-bold text-center text-primary">Configuración de Personajes</CardTitle>
+        <CardTitle className="text-2xl sm:text-3xl font-bold text-center text-primary">Configuración de Personajes</CardTitle>
         <CardDescription className="text-center">
           Introduce las estadísticas iniciales para ambos combatientes cósmicos.
         </CardDescription>
@@ -79,7 +79,7 @@ export function SetupForm({ onSetupComplete }: SetupFormProps) {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 gap-8">
               {/* Player 1 Stats */}
               <div className="space-y-4 p-4 border border-border rounded-lg shadow-md">
                 <h3 className="text-xl font-semibold text-center text-accent flex items-center justify-center gap-2"><User className="w-6 h-6" /> Jugador 1</h3>
@@ -194,11 +194,10 @@ export function SetupForm({ onSetupComplete }: SetupFormProps) {
                 />
               </div>
             </div>
-            <Button type="submit" className="w-full text-lg py-6">Iniciar Combate</Button>
+            <Button type="submit" size="lg" className="w-full text-lg">Iniciar Combate</Button>
           </form>
         </Form>
       </CardContent>
     </Card>
   );
 }
-

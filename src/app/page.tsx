@@ -113,7 +113,7 @@ export default function HomePage() {
 
   return (
     <div className="w-full flex flex-col items-center space-y-8">
-      <h1 className="text-5xl font-bold text-center text-primary tracking-tight">
+      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-primary tracking-tight">
         Rastreador de Combate Cósmico
       </h1>
 
@@ -127,7 +127,7 @@ export default function HomePage() {
         </Alert>
       )}
 
-      <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 justify-items-center">
+      <div className="w-full grid grid-cols-1 gap-8 justify-items-center max-w-md">
         <CharacterCard
           character={player1}
           onStatChange={handleStatChange}
@@ -140,10 +140,13 @@ export default function HomePage() {
         />
       </div>
 
-      <Button onClick={resetGame} variant="outline" size="lg" className="mt-8 text-lg py-6">
+      <Button 
+        onClick={resetGame} 
+        variant="outline" 
+        className="mt-8 px-6 py-3 text-base sm:px-8 sm:py-3 sm:text-lg"
+      >
         <RotateCcw className="mr-2 h-5 w-5" /> Reiniciar Combate
       </Button>
     </div>
   );
 }
-

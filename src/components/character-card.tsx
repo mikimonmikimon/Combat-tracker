@@ -92,13 +92,13 @@ export function CharacterCard({ character, onStatChange, isGameOver }: Character
         <Progress value={(value / maxValue) * 100} className="h-3 [&>div]:bg-primary" />
       )}
       {!isGameOver && (
-        <div className="flex items-center space-x-2 pt-1">
+        <div className="flex flex-col space-y-2 pt-2 sm:flex-row sm:items-center sm:space-x-2 sm:space-y-0 sm:pt-1">
           <Input
             id={`${character.id}-${statKey}-input`}
             type="number"
             value={actionValues[statKey]}
             onChange={(e) => handleInputChange(statKey, e.target.value)}
-            className="w-20 h-9 text-sm"
+            className="w-full sm:w-20 h-9 text-sm"
             min="1"
           />
           <Button
@@ -106,7 +106,7 @@ export function CharacterCard({ character, onStatChange, isGameOver }: Character
             size="sm"
             onClick={() => handleAction(statKey, "damage")}
             aria-label={`Dañar ${label}`}
-            className="hover:bg-destructive hover:text-destructive-foreground"
+            className="w-full sm:w-auto hover:bg-destructive hover:text-destructive-foreground"
           >
             <MinusCircle className="w-4 h-4 mr-1" /> Dañar
           </Button>
@@ -115,7 +115,7 @@ export function CharacterCard({ character, onStatChange, isGameOver }: Character
             size="sm"
             onClick={() => handleAction(statKey, "heal")}
             aria-label={`Curar ${label}`}
-            className="hover:bg-emerald-500 hover:text-white"
+            className="w-full sm:w-auto hover:bg-emerald-500 hover:text-white"
           >
             <PlusCircle className="w-4 h-4 mr-1" /> Curar
           </Button>
@@ -127,7 +127,7 @@ export function CharacterCard({ character, onStatChange, isGameOver }: Character
   return (
     <Card className="w-full max-w-md shadow-lg transform transition-all duration-300 hover:shadow-2xl">
       <CardHeader className="pb-4">
-        <CardTitle className="text-3xl font-bold text-center text-primary flex items-center justify-center gap-2">
+        <CardTitle className="text-2xl sm:text-3xl font-bold text-center text-primary flex items-center justify-center gap-2">
           <CharacterIcon className="w-8 h-8" /> {character.name}
         </CardTitle>
       </CardHeader>
@@ -146,4 +146,3 @@ export function CharacterCard({ character, onStatChange, isGameOver }: Character
     </Card>
   );
 }
-

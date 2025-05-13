@@ -51,9 +51,9 @@ export function SetupForm({ onSetupComplete }: SetupFormProps) {
   const form = useForm<SetupFormValues>({
     resolver: zodResolver(setupFormSchema),
     defaultValues: {
-      player1Name: "Caballero Pegaso",
+      player1Name: "Jugador 1",
       player1Stats: { health: 100, armor: 20, cosmos: 50 },
-      player2Name: "Caballero Dragón",
+      player2Name: "Jugador 2",
       player2Stats: { health: 120, armor: 30, cosmos: 40 },
     },
   });
@@ -104,7 +104,7 @@ export function SetupForm({ onSetupComplete }: SetupFormProps) {
                   name="player1Stats.health"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-1 text-xs sm:text-sm"><Heart className="w-3 h-3 sm:w-4 sm:h-4 text-red-500" /> Salud</FormLabel>
+                      <FormLabel className="flex items-center gap-1 text-xs sm:text-sm"><Heart className="w-3 h-3 sm:w-4 sm:h-4 text-red-400" /> Salud</FormLabel>
                       <FormControl>
                         <Input type="number" placeholder="Salud Inicial" {...field} className="text-sm h-9"/>
                       </FormControl>
@@ -161,7 +161,7 @@ export function SetupForm({ onSetupComplete }: SetupFormProps) {
                   name="player2Stats.health"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-1 text-xs sm:text-sm"><Heart className="w-3 h-3 sm:w-4 sm:h-4 text-red-500" /> Salud</FormLabel>
+                      <FormLabel className="flex items-center gap-1 text-xs sm:text-sm"><Heart className="w-3 h-3 sm:w-4 sm:h-4 text-red-400" /> Salud</FormLabel>
                       <FormControl>
                         <Input type="number" placeholder="Salud Inicial" {...field} className="text-sm h-9"/>
                       </FormControl>
@@ -204,3 +204,4 @@ export function SetupForm({ onSetupComplete }: SetupFormProps) {
     </Card>
   );
 }
+

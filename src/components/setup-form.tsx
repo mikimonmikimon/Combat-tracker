@@ -51,10 +51,10 @@ export function SetupForm({ onSetupComplete }: SetupFormProps) {
   const form = useForm<SetupFormValues>({
     resolver: zodResolver(setupFormSchema),
     defaultValues: {
-      player1Name: "Jugador 1",
-      player1Stats: { health: 100, armor: 50, cosmos: 50 },
-      player2Name: "Jugador 2",
-      player2Stats: { health: 100, armor: 50, cosmos: 50 },
+      player1Name: "Caballero Pegaso",
+      player1Stats: { health: 100, armor: 20, cosmos: 50 },
+      player2Name: "Caballero Dragón",
+      player2Stats: { health: 120, armor: 30, cosmos: 40 },
     },
   });
 
@@ -72,7 +72,7 @@ export function SetupForm({ onSetupComplete }: SetupFormProps) {
   }
 
   return (
-    <Card className="w-full max-w-lg shadow-xl">
+    <Card className="w-full max-w-2xl shadow-xl"> {/* Increased max-width to accommodate side-by-side layout */}
       <CardHeader>
         <CardTitle className="text-2xl sm:text-3xl font-bold text-center text-primary">Configuración de Personajes</CardTitle>
         <CardDescription className="text-center">
@@ -82,20 +82,20 @@ export function SetupForm({ onSetupComplete }: SetupFormProps) {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <div className="grid grid-cols-1 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8"> {/* Grid for side-by-side player setup */}
               {/* Player 1 Stats */}
-              <div className="space-y-4 p-4 border border-border rounded-lg shadow-md">
-                <h3 className="text-xl font-semibold text-center text-accent flex items-center justify-center gap-2"><User className="w-6 h-6" /> Jugador 1</h3>
+              <div className="space-y-3 p-3 sm:p-4 border border-border rounded-lg shadow-md">
+                <h3 className="text-lg sm:text-xl font-semibold text-center text-accent flex items-center justify-center gap-2"><User className="w-5 h-5 sm:w-6 sm:h-6" /> {form.watch("player1Name") || "Jugador 1"}</h3>
                 <FormField
                   control={form.control}
                   name="player1Name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Nombre</FormLabel>
+                      <FormLabel className="text-xs sm:text-sm">Nombre</FormLabel>
                       <FormControl>
-                        <Input placeholder="Nombre del Jugador 1" {...field} />
+                        <Input placeholder="Nombre del Jugador 1" {...field} className="text-sm h-9"/>
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
@@ -104,11 +104,11 @@ export function SetupForm({ onSetupComplete }: SetupFormProps) {
                   name="player1Stats.health"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-1"><Heart className="w-4 h-4 text-red-500" /> Salud</FormLabel>
+                      <FormLabel className="flex items-center gap-1 text-xs sm:text-sm"><Heart className="w-3 h-3 sm:w-4 sm:h-4 text-red-500" /> Salud</FormLabel>
                       <FormControl>
-                        <Input type="number" placeholder="Salud Inicial" {...field} />
+                        <Input type="number" placeholder="Salud Inicial" {...field} className="text-sm h-9"/>
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
@@ -117,11 +117,11 @@ export function SetupForm({ onSetupComplete }: SetupFormProps) {
                   name="player1Stats.armor"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-1"><Shield className="w-4 h-4 text-blue-400" /> Armadura</FormLabel>
+                      <FormLabel className="flex items-center gap-1 text-xs sm:text-sm"><Shield className="w-3 h-3 sm:w-4 sm:h-4 text-blue-400" /> Armadura</FormLabel>
                       <FormControl>
-                        <Input type="number" placeholder="Armadura Inicial" {...field} />
+                        <Input type="number" placeholder="Armadura Inicial" {...field} className="text-sm h-9"/>
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
@@ -130,29 +130,29 @@ export function SetupForm({ onSetupComplete }: SetupFormProps) {
                   name="player1Stats.cosmos"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-1"><Sparkles className="w-4 h-4 text-yellow-400" /> Cosmos</FormLabel>
+                      <FormLabel className="flex items-center gap-1 text-xs sm:text-sm"><Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400" /> Cosmos</FormLabel>
                       <FormControl>
-                        <Input type="number" placeholder="Cosmos Inicial" {...field} />
+                        <Input type="number" placeholder="Cosmos Inicial" {...field} className="text-sm h-9"/>
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
               </div>
 
               {/* Player 2 Stats */}
-              <div className="space-y-4 p-4 border border-border rounded-lg shadow-md">
-                <h3 className="text-xl font-semibold text-center text-accent flex items-center justify-center gap-2"><UserRound className="w-6 h-6" /> Jugador 2</h3>
+              <div className="space-y-3 p-3 sm:p-4 border border-border rounded-lg shadow-md">
+                <h3 className="text-lg sm:text-xl font-semibold text-center text-accent flex items-center justify-center gap-2"><UserRound className="w-5 h-5 sm:w-6 sm:h-6" /> {form.watch("player2Name") || "Jugador 2"}</h3>
                 <FormField
                   control={form.control}
                   name="player2Name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Nombre</FormLabel>
+                      <FormLabel className="text-xs sm:text-sm">Nombre</FormLabel>
                       <FormControl>
-                        <Input placeholder="Nombre del Jugador 2" {...field} />
+                        <Input placeholder="Nombre del Jugador 2" {...field} className="text-sm h-9"/>
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
@@ -161,11 +161,11 @@ export function SetupForm({ onSetupComplete }: SetupFormProps) {
                   name="player2Stats.health"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-1"><Heart className="w-4 h-4 text-red-500" /> Salud</FormLabel>
+                      <FormLabel className="flex items-center gap-1 text-xs sm:text-sm"><Heart className="w-3 h-3 sm:w-4 sm:h-4 text-red-500" /> Salud</FormLabel>
                       <FormControl>
-                        <Input type="number" placeholder="Salud Inicial" {...field} />
+                        <Input type="number" placeholder="Salud Inicial" {...field} className="text-sm h-9"/>
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
@@ -174,11 +174,11 @@ export function SetupForm({ onSetupComplete }: SetupFormProps) {
                   name="player2Stats.armor"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-1"><Shield className="w-4 h-4 text-blue-400" /> Armadura</FormLabel>
+                      <FormLabel className="flex items-center gap-1 text-xs sm:text-sm"><Shield className="w-3 h-3 sm:w-4 sm:h-4 text-blue-400" /> Armadura</FormLabel>
                       <FormControl>
-                        <Input type="number" placeholder="Armadura Inicial" {...field} />
+                        <Input type="number" placeholder="Armadura Inicial" {...field} className="text-sm h-9"/>
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
@@ -187,17 +187,17 @@ export function SetupForm({ onSetupComplete }: SetupFormProps) {
                   name="player2Stats.cosmos"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-1"><Sparkles className="w-4 h-4 text-yellow-400" /> Cosmos</FormLabel>
+                      <FormLabel className="flex items-center gap-1 text-xs sm:text-sm"><Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400" /> Cosmos</FormLabel>
                       <FormControl>
-                        <Input type="number" placeholder="Cosmos Inicial" {...field} />
+                        <Input type="number" placeholder="Cosmos Inicial" {...field} className="text-sm h-9"/>
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
               </div>
             </div>
-            <Button type="submit" size="lg" className="w-full text-lg">Iniciar Combate</Button>
+            <Button type="submit" size="lg" className="w-full text-base sm:text-lg mt-6">Iniciar Combate</Button>
           </form>
         </Form>
       </CardContent>

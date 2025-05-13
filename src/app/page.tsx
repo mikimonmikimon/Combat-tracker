@@ -7,7 +7,7 @@ import { SetupForm } from "@/components/setup-form";
 import { CharacterCard } from "@/components/character-card";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { User, UserRound, Zap, Shield, Heart, Award, RotateCcw } from "lucide-react";
+import { User, UserRound, Award, RotateCcw } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 type GamePhase = "setup" | "combat" | "gameOver";
@@ -23,22 +23,24 @@ export default function HomePage() {
 
   // Load state from localStorage on component mount
   useEffect(() => {
-    const storedPlayer1 = localStorage.getItem('player1');
-    const storedPlayer2 = localStorage.getItem('player2');
+    const storedPlayer1Data = localStorage.getItem('player1');
+    const storedPlayer2Data = localStorage.getItem('player2');
     const storedGamePhase = localStorage.getItem('gamePhase');
     const storedWinner = localStorage.getItem('winner');
 
-    if (storedPlayer1) {
+    if (storedPlayer1Data) {
       try {
-        setPlayer1(JSON.parse(storedPlayer1));
+        const parsedPlayer1 = JSON.parse(storedPlayer1Data) as Omit<CharacterStats, 'icon'>;
+        setPlayer1({ ...parsedPlayer1, icon: User }); // Re-assign icon component
       } catch (error) {
         console.error("Error parsing player1 from localStorage", error);
         localStorage.removeItem('player1');
       }
     }
-    if (storedPlayer2) {
+    if (storedPlayer2Data) {
       try {
-        setPlayer2(JSON.parse(storedPlayer2));
+        const parsedPlayer2 = JSON.parse(storedPlayer2Data) as Omit<CharacterStats, 'icon'>;
+        setPlayer2({ ...parsedPlayer2, icon: UserRound }); // Re-assign icon component
       } catch (error) {
         console.error("Error parsing player2 from localStorage", error);
         localStorage.removeItem('player2');
